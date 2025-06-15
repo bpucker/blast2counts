@@ -49,14 +49,17 @@ Optional:
 
 `--out` full path to output folder. If the folder does not exist, it will be created.
 
+`--cpus` specifies the number of threads to use in the BLASTn analysis. Increasing this value can substantially reduce the run time. Default: 10.
 
+`--wordsize` specifies the word_size used by BLASTn. Increasing this value substantially reduces the computational costs, but also the sensitivity. Default: 10.
 
-			--cpus <NUM_THREADS_FOR_BLAST>[10]
-					--wordsize <BLASTN_WORD_SIZE>[10]
-					--minsim <MIN_BLAST_HIT_SIMILARITY_%>[80]
-					--minlen <MIN_BLAST_HIT_LENGTH>[25]
-					--maxeval <MAX_EVALUE_CUTOFF>[0.001]
-					--minscore <MIN_BLAST_SCORE>[30]
+`--minsim` specifies the minimal similarity of BLAST hits (in percent) to be considered in the filtering step. Default: 80.
+
+`--minlen` specifies the minimal BLAST hit length to be considered in the filtering step. Default: 25.
+
+`--maxeval` specifies the maximal e-value acceptablein the BLAST hit filtering. Default: 0.001.
+
+`--minscore` specifies the minimal BLAST hit score to be considered during the filtering. Default: 30.
 
 
 ## References
