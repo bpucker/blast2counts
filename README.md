@@ -8,11 +8,8 @@ This script allows the extraction of valid reads from a given FASTQ file. Reads 
 ```
 Usage:
   python3 analyze_susp_fastqs.py --in <FASTQ_GZ_FILE> --out <FASTA_FILE>
---in <FASTQ.GZ_FILE>
-					--out <FASTA_FILE>
   --in      STR    Input FASTQ file (.fastq.gz)
   --out     STR    Output FASTA file (.fasta)
-
 ```
 
 `--in` full path to the input FASTQ file (gzip-compressed).
@@ -20,7 +17,23 @@ Usage:
 `--out` full path to the output FASTA file.
 
 
-## 
+## blast_PE_reads.py
+
+```
+Usage:
+  python3 blast_PE_reads.py --ref <FILE> --gff <FILE> --reads1 <FILE> --reads2 <FILE> --out <FOLDER>
+  --ref      STR    Reference genome sequence file (FASTA)
+  --gff      STR    Reference annotation file (GFF)
+  --reads1   STR    Reads input file 1 (FASTA)
+  --reads2   STR    Reads input file 2 (FASTA)
+  --out      STR    Output folder
+```
+
+`--in` full path to the input FASTQ file (gzip-compressed).
+
+
+
+
 
 ## References
 
