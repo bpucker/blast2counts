@@ -22,11 +22,21 @@ Usage:
 ```
 Usage:
   python3 blast_PE_reads.py --ref <FILE> --gff <FILE> --reads1 <FILE> --reads2 <FILE> --out <FOLDER>
-  --ref      STR    Reference genome sequence file (FASTA)
-  --gff      STR    Reference annotation file (GFF)
-  --reads1   STR    Reads input file 1 (FASTA)
-  --reads2   STR    Reads input file 2 (FASTA)
-  --out      STR    Output folder
+
+Mandatory:
+  --ref        STR    Reference genome sequence file (FASTA)
+  --gff        STR    Reference annotation file (GFF)
+  --reads1     STR    Reads input file 1 (FASTA)
+  --reads2     STR    Reads input file 2 (FASTA)
+  --out        STR    Output folder
+
+Optional:
+  --cpus       INT    Number of threads for BLAST [10]
+  --wordsize   INT    Word size in BLASTn [10]
+  --minsim     INT    Minimal BLAST hit similarity [80]%
+  --minlen     INT    Minimal BLAST hit length [25]
+  --maxeval    FLOAT  Maximal BLAST hit evalue [0.001]
+  --minscore   INT    Minimal BLAST score [30]
 ```
 
 `--ref` full path to reference genome sequence file (FASTA).
@@ -38,6 +48,15 @@ Usage:
 `--reads2` full path to FASTA file containing R2 reads.
 
 `--out` full path to output folder. If the folder does not exist, it will be created.
+
+
+
+			--cpus <NUM_THREADS_FOR_BLAST>[10]
+					--wordsize <BLASTN_WORD_SIZE>[10]
+					--minsim <MIN_BLAST_HIT_SIMILARITY_%>[80]
+					--minlen <MIN_BLAST_HIT_LENGTH>[25]
+					--maxeval <MAX_EVALUE_CUTOFF>[0.001]
+					--minscore <MIN_BLAST_SCORE>[30]
 
 
 ## References
