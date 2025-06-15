@@ -1,7 +1,7 @@
 ### Boas Pucker ###
 ### pucker@uni-bonn.de ###
 
-__version__ = "v0.1"
+__version__ = "v0.11"
 
 __usage__ = """
 					python3 blast_PE_reads.py (""" + __version__ + """)
@@ -10,6 +10,14 @@ __usage__ = """
 					--reads1 <R1_READS_IN_FASTA_FILE>
 					--reads2 <R2_READS_IN_FASTA_FILE>
 					--out <OUTPUT_FOLDER>
+					
+					optional:
+					--cpus <NUM_THREADS_FOR_BLAST>[10]
+					--wordsize <BLASTN_WORD_SIZE>[10]
+					--minsim <MIN_BLAST_HIT_SIMILARITY_%>[80]
+					--minlen <MIN_BLAST_HIT_LENGTH>[25]
+					--maxeval <MAX_EVALUE_CUTOFF>[0.001]
+					--minscore <MIN_BLAST_SCORE>[30]
 					"""
 
 import os, sys, subprocess
@@ -157,12 +165,55 @@ def main( arguments ):
 	
 	if not os.path.exists( output_folder ):
 		os.makedirs( output_folder )
-
-	cpus = 10
-	min_sim = 80
-	min_len = 25
-	max_evalue = 0.001
-	min_score = 30
+	
+	if '--cpus' in arguments:
+		try:
+			cpus = int( arguments[ arguments.index('--cpus') + 1 ] )
+		except:
+			cpus = 10
+	else:
+		cpus = 10
+	
+	if '--minsim' in arguments:
+		try:
+			min_sim = int( arguments[ arguments.index('--minsim') + 1 ] )
+		except:
+			min_sim = 80
+	else:
+		min_sim = 80
+	
+	if '--minlen' in arguments:
+		try:
+			min_len = int( arguments[ arguments.index('--minlen') + 1 ] )
+		except:
+			min_len = 25
+	else:
+		min_len = 25
+	
+	if '--maxeval' in arguments:
+		try:
+			max_evalue = float( arguments[ arguments.index('--maxeval') + 1 ] )
+		except:
+			max_evalue = 0.001
+	else:
+		max_evalue = 0.001
+	
+	if '--minscore' in arguments:
+		try:
+			min_score = int( arguments[ arguments.index('--minscore') + 1 ] )
+		except:
+			min_score = 30
+	else:
+		min_score = 30
+	
+	
+	if '--wordsize' in arguments:
+		try:
+			wordsize = int( arguments[ arguments.index('--wordsize') + 1 ] )
+		except:
+			wordsize = 10
+	else:
+		wordsize = 10
 
 	# --- run BLAST --- #
 	blastdb = output_folder + "blastdb"
@@ -172,12 +223,12 @@ def main( arguments ):
 	
 	blast1_result_file = output_folder + "blast1_results.txt"
 	if not os.path.isfile( blast1_result_file ):
-		cmd = "blastn -query " + read1_fasta_input_file + " -db " + blastdb + " -out " + blast1_result_file + " -outfmt 6 -evalue 0.01 -num_threads " + str( cpus ) + " -word_size 10"
+		cmd = "blastn -query " + read1_fasta_input_file + " -db " + blastdb + " -out " + blast1_result_file + " -outfmt 6 -evalue 0.01 -num_threads " + str( cpus ) + " -word_size " + str( wordsize )
 		p = subprocess.Popen( args= cmd, shell=True )
 		p.communicate()
 	blast2_result_file = output_folder + "blast2_results.txt"
 	if not os.path.isfile( blast2_result_file ):
-		cmd = "blastn -query " + read2_fasta_input_file + " -db " + blastdb + " -out " + blast2_result_file + " -outfmt 6 -evalue 0.01 -num_threads " + str( cpus ) + " -word_size 10"
+		cmd = "blastn -query " + read2_fasta_input_file + " -db " + blastdb + " -out " + blast2_result_file + " -outfmt 6 -evalue 0.01 -num_threads " + str( cpus ) + " -word_size " + str( wordsize )
 		p = subprocess.Popen( args= cmd, shell=True )
 		p.communicate()
 	
