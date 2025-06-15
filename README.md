@@ -1,5 +1,5 @@
 # blast2counts
-analyze RNA-seq data with BLASTn
+This repository contains scripts to analyze RNA-seq data with BLASTn.
 
 ## analyze_susp_fastqs.py
 This script allows the extraction of valid reads from a given FASTQ file. Reads with long N stretches are ignored.
@@ -29,10 +29,15 @@ Usage:
   --out      STR    Output folder
 ```
 
-`--in` full path to the input FASTQ file (gzip-compressed).
+`--ref` full path to reference genome sequence file (FASTA).
 
+`--gff` full path to reference annotation file (GFF).
 
+`--reads1` full path to FASTA file containing R1 reads.
 
+`--reads2` full path to FASTA file containing R2 reads.
+
+`--out` full path to output folder. If the folder does not exist, it will be created.
 
 
 ## References
