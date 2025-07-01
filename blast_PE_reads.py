@@ -1,7 +1,7 @@
 ### Boas Pucker ###
 ### pucker@uni-bonn.de ###
 
-__version__ = "v0.11"
+__version__ = "v0.13"
 
 __usage__ = """
 					python3 blast_PE_reads.py (""" + __version__ + """)
@@ -83,7 +83,10 @@ def load_BLAST_results( blast1_result_file, blast2_result_file, min_sim, min_len
 						except KeyError:
 							data.update( { parts[0]: { 	'chr2': parts[1], 'sstart2': parts[6], 'send2': parts[7], 'evalue2': parts[-2], 'score2': parts[-1],
 																		'chr1': None, 'sstart1': None, 'send1': None, 'evalue1': None, 'score1': None } } )
-							del failed_reads[ parts[0] ]	#remove read ID from failed reads
+							try:
+								del failed_reads[ parts[0] ]	#remove read ID from failed reads
+							except KeyError:
+								pass
 						best_hits2.update( { parts[0]: None } )
 			line = f.readline()
 	return data, failed_reads
@@ -243,7 +246,17 @@ def main( arguments ):
 	with open( clean_blast_hit_file, "w" ) as out:
 		for key in sorted( list( data.keys() ) ):
 			info = data[ key ]
-			out.write( "\t".join( [ key, info['chr1'], info['sstart1'], info['send1'], info['evalue1'], info['score1'], info['sstart2'], info['send2'], info['evalue2'], info['score2'] ] ) + "\n" )
+			out.write( "\t".join( list( map( str, [ 	key,
+																	info['chr1'],
+																	info['sstart1'],
+																	info['send1'],
+																	info['evalue1'],
+																	info['score1'],
+																	info['sstart2'],
+																	info['send2'],
+																	info['evalue2'],
+																	info['score2'] 
+																] ) ) ) + "\n" )
 			
 	# --- analyze clean hits over chromosomes --- #
 	analyze_distribution_across_chromosomes( data )
